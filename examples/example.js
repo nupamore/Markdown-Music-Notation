@@ -12,7 +12,7 @@ var mdl = function(){
 
   // mml
   var mml = mdl2mml(mdl);
-  var mmlText = JSON.stringify(mml,null,3);
+  var mmlText = JSON.stringify(mml,null,4);
 
   $('#mml').prop('value', mmlText );
 
@@ -36,6 +36,18 @@ var play = function(){
     gen.pause();
     this.stop();
   }).start();
+};
+
+var opt = function(){
+  $.ajax({
+    dataType: 'jsonp',
+    data: 'mml=' + $('#mml').prop('value'),
+    jsonp: 'callback',
+    url: 'http://dm1425968007895.fun25.co.kr/opt?callback=?',
+    success: function(data) {
+      $('#mml').prop('value', JSON.stringify(data,null,4));
+    }
+  });
 };
 
 $(document).ready(function(){
