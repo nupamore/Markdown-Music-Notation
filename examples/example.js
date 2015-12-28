@@ -1,14 +1,22 @@
 
-var mdl = function(){
-  var mdl = mdlParser( $('#musicdown').prop('value') );
+
+$(document).ready(function(){
+  musicdown = $('.musicdown');
+  vexflow = $('.vexflow');
 
 
-  // vextab
-  /*
-  var vextab = mdl2vextab(mdl);
-  $('.editor').prop('value',vextab);
-  $('.editor').trigger('keyup');
-  */
+  for(var m in musicdown){
+    mdl(m);
+  }
+});
+
+
+var mdl = function(index){
+
+  var mdl = mdlParser( musicdown[index].value );
+
+  // vexflow
+  mdl2vexflow(mdl, $('canvas')[index]);
 
   // mml
   var mml = mdl2mml(mdl);
@@ -16,8 +24,6 @@ var mdl = function(){
 
   $('#mml').prop('value', mmlText );
 
-  // vexflow
-  mdl2vexflow(mdl, $('canvas')[0]);
 };
 
 var play = function(){

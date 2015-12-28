@@ -14,9 +14,6 @@
   <link href='https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css' rel='stylesheet' type='text/css'>
   <style>
     .editor {
-      display: none;
-    }
-    .editor2 {
       background: #eef;
       border: 0 solid 0;
       border-left: 15px solid #ddf;
@@ -37,64 +34,13 @@
 </head>
 <body>
   <h1>MusicDown Language</h1>
-  <table><tr>
-    <td>
-      <br> 도레미
-      <br> >
-      <br> <
-      <br> 도' 도.
-      <br> ,
-      <br> -
-    </td>
-    <td>
-      <br>: 음높이
-      <br>: 옥타브 +
-      <br>: 옥타브 -
-      <br>: <도, >도
-      <br>: 쉼표
-      <br>: 음길이 +
-    </td>
-    <td> </td>
-    <td>
-      <br> #, b
-      <br> 도n
-      <br> &
-      <br> *
-      <br> ( )
-      <br> "abc"
-    </td>
-    <td>
-      <br>: 샾, 플랫
-      <br>: 제자리표
-      <br>: 붙임표
-      <br>: 이벤트 위치설정
-      <br>: 잇단음표
-      <br>: 텍스트
-    </td>
-    <td> </td>
-    <td>
-      <br> <b>event 목록</b>
-      <br> l, length
-      <br> t, tempo
-      <br> v, volume
-      <br> key
-      <br> clef
-    </td>
-    <td>
-      <br>
-      <br>: 기본 음길이
-      <br>: 속도
-      <br>: 음량
-      <br>: 키
-      <br>: 조표
-    </td></tr>
-  </table>
-  <font color=red>텍스트 미구현</font>
+  <h2><a href="tutorial.html">튜토리얼 페이지</a></h2>
+
   <table>
     <tr><td>
       <div>
         <h3>MusicDown</h3>
-<textarea name="textarea" id="musicdown" cols="80" rows="15" class="editor2" onkeyup="mdl()">
+<textarea name="textarea" class="musicdown editor" cols="80" rows="15" onkeyup="mdl(0)">
 't:114'
 
 'piano-right'
@@ -135,8 +81,8 @@
     </td>
     <td>
       <div>
-        <h3>MML <button onclick="play()">play</button> <button onclick="opt()">optimize!</button></h3>
-        <textarea name="textarea" id="mml" cols="80" rows="15" class="editor2">
+        <h3>MML <button onclick="play()">play</button> <button onclick="opt()">마비노기 최적화</button></h3>
+        <textarea name="textarea" id="mml" cols="80" rows="15" class="editor">
 
         </textarea>
       </div>
