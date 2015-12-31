@@ -204,7 +204,7 @@ this.mdlParser = function(text){
             }
             // treck end
             else
-              eventsObject[s][ev[e].split(':')[0]] = ev[e].split(':')[1];
+              eventsObject[s][ev[e].split(':')[0].toLowerCase()] = ev[e].split(':')[1];
           }
         }
       }
