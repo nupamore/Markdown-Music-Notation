@@ -349,7 +349,7 @@ this.mdlParser = function(text){
                   tempo += eventLength.tempo.add;
                   eventLength.tempo.num--;
                   if(!eventLength.tempo.num){
-                    volume = eventLength.tempo.final;
+                    tempo = eventLength.tempo.final;
                     delete eventLength.tempo;
                   }
                 break;
