@@ -100,7 +100,7 @@ this.mdlParser = function(text){
     text = text.replace(/ /g,'');
     text = text.replace(/\n+/g,';');
     // auto enter
-    text = text.replace(/(\'[a-z]+:.*?\')/g,"$1;");
+    text = text.replace(/(\'[a-zA-Z]+:.*?\')/g,"$1;");
     // coment
     text = text.replace(/\/\*.*?\*\//g,'');
     text = text.split(/;+/);
