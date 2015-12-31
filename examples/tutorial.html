@@ -61,7 +61,7 @@
 
  | C D# Eb Fn G C' C'' C. |
 
- | 솔솔 라라 | 솔솔 미- | 솔& 미미 | 레- ,, |</textarea>
+ | 솔솔 라라 | 솔솔 미- | 솔& 미미 | 레16 , , |</textarea>
 </div>
 <div class="wrapper">
   <canvas class="vexflow" width=1000 height=300></canvas>
@@ -69,7 +69,8 @@
 
 <p><code>,</code> 는 쉼표이고 <code>&amp;</code> 는 붙임표입니다. 붙임표는 앞의 음정을 인계받는 하나의 노트로 인식됩니다.</p>
 
-<p><code>-</code> 는 앞에 존재하는 음표의 길이를 늘려주는 역할을 합니다.</p>
+<p><code>-</code> 는 앞에 존재하는 음표의 길이를 늘려주는 역할을 합니다. <code>--</code> 는 <code>=</code> 와 같습니다.</p>
+<p>음표 뒤에 숫자로 직접 설정도 가능합니다.</p>
 
 <br><br>
 
@@ -83,7 +84,7 @@
  'key:D, clef:bass'
  |<CDEF CDEF | CDEF C-E- |
 
- ''                     'l:16'
+ ''                     'l:16, t:40-9'
  |<CDEF C-D- |*C-DE FC-D EFC- DEF- |</textarea>
 </div>
 <div class="wrapper">
@@ -127,6 +128,7 @@
 </tbody></table>
 
 <p>조성을 바꾸게 되면 <code># b</code>이  자동으로 적용됩니다.</p>
+<p>속도와 음량은 <code>-숫자</code> 를 이용하여 서서히 바뀌도록 할 수 있습니다.</p>
 
 <br><br>
 

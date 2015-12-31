@@ -97,9 +97,14 @@ this.mdlParser = function(text){
 
   // split rows, type check
   (function(){
-    text = text.replace(/\n/g,';');
+    text = text.replace(/ /g,'');
+    text = text.replace(/\n+/g,';');
+    // auto enter
+    text = text.replace(/(\'[a-z]+:.*?\')/g,"$1;");
+    // coment
     text = text.replace(/\/\*.*?\*\//g,'');
-    text = text.split(';');
+    text = text.split(/;+/);
+
     for(var i in text){
       var row = {
         type: '',
@@ -168,7 +173,8 @@ this.mdlParser = function(text){
           note = '',
           octave = 4,
           time = 0,
-          tuplet = -1;
+          tuplet = -1,
+          eventLength = {};
       /* row state end */
       if(i){
         track = Object.keys(trackConfig)[0];
@@ -206,7 +212,7 @@ this.mdlParser = function(text){
       timeline[i] = [];
       // melody
       for(var m in melody){
-        if( !melody[m].match(/[A-G|#nb><*\-:,&'.\(\) \ub3c4-\ud30c]/) ){
+        if( !melody[m].match(/[A-G0-9|#nbd><*\-=:,&'.\(\) \ub3c4-\ud30c]/) ){
           error( "grammorError. don't use "+melody[m], staffs[i].melody, m );
           continue;
         }
@@ -225,6 +231,7 @@ this.mdlParser = function(text){
               timeline[i][time-1].end = true;
           break;
           case '-': timeline[i][time-1].noteLen += length; break;
+          case '=': timeline[i][time-1].noteLen += length*2; break;
           case '#': timeline[i][time-1].note[0]+='#'; break;
           case 'b': timeline[i][time-1].note[0]+='b'; break;
           case 'n': timeline[i][time-1].note[0]+='n'; break;
@@ -268,6 +275,12 @@ this.mdlParser = function(text){
           case '&':
           //break;
           default:
+            // number length type
+            if(melody[m].match(/[0-9d]/)){
+              timeline[i][time-1].noteLenConv += melody[m];
+              timeline[i][time-1].noteLen = convertLength(timeline[i][time-1].noteLenConv);
+              continue;
+            }
             // first character
             if(!time){
               bar = 'start';
@@ -284,29 +297,70 @@ this.mdlParser = function(text){
             // event execute
             if(events){
               for(var e in eventsObject[eventCount]){
+                var ev = eventsObject[eventCount][e];
                 switch( e ){
                   case 't':
                   case 'tempo':
-                    tempo = eventsObject[eventCount][e]*1;
+                    if(ev.match('-')){
+                      var presentTempo = tempo,
+                          finalTempo = ev.split('-')[0],
+                          num = ev.split('-')[1];
+                      eventLength.tempo = {
+                        add: (finalTempo-presentTempo)/num,
+                        num: num,
+                        final: finalTempo
+                      };
+                    }
+                    else tempo = ev*1;
                   break;
                   case 'l':
                   case 'length':
-                    length = convertLength( eventsObject[eventCount][e] );
+                    length = convertLength( ev );
                   break;
                   case 'v':
                   case 'volume':
-                    volume = eventsObject[eventCount][e]*1;
+                    if(ev.match('-')){
+                      var presentVolume = volume,
+                          finalVolume = ev.split('-')[0],
+                          num = ev.split('-')[1];
+                      eventLength.volume = {
+                        add: (finalVolume-presentVolume)/num,
+                        num: num,
+                        final: finalVolume
+                      };
+                    }
+                    else volume = ev*1;
                   break;
                   case 'key':
-                    key = eventsObject[eventCount][e];
+                    key = ev;
                   break;
                   case 'time':
-                    meter = eventsObject[eventCount][e];
+                    meter = ev;
                   break;
                   case 'clef':
-                    clef = eventsObject[eventCount][e];
+                    clef = ev;
                   break;
                 }
+              }
+            }
+            for(var ev in eventLength){
+              switch(ev){
+                case 'tempo':
+                  tempo += eventLength.tempo.add;
+                  eventLength.tempo.num--;
+                  if(!eventLength.tempo.num){
+                    volume = eventLength.tempo.final;
+                    delete eventLength.tempo;
+                  }
+                break;
+                case 'volume':
+                  volume += eventLength.volume.add;
+                  eventLength.volume.num--;
+                  if(!eventLength.volume.num){
+                    volume = eventLength.volume.final;
+                    delete eventLength.volume;
+                  }
+                break;
               }
             }
 
@@ -321,6 +375,7 @@ this.mdlParser = function(text){
               octave: [octave],
               note: [kor2eng(melody[m])],
               noteLen: length,
+              noteLenConv: '',
               bar: bar,
               end: end,
               tupletCheck: tuplet
