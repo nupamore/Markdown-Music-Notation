@@ -49,7 +49,7 @@ var opt = function(){
     dataType: 'jsonp',
     data: 'mml=' + $('#mml').prop('value'),
     jsonp: 'callback',
-    url: 'http://dm1425968007895.fun25.co.kr/opt?callback=?',
+    url: 'http://nupa.fun25.co.kr:17902/opt?callback=?',
     success: function(data) {
       $('#mml').prop('value', JSON.stringify(data,null,4));
     }

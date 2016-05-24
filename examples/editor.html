@@ -1,0 +1,89 @@
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <script src="lib/vexflow-min.js"></script>
+  <!--script src="lib/vextab-div.js"></script-->
+  <script src="lib/musicDown.js"></script>
+  <script src="lib/timbre.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <script src="example.js"></script>
+
+  <!--link rel="stylesheet" href="vextab.css"-->
+  <link href='https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css' rel='stylesheet' type='text/css'>
+  <style>
+    .editor {
+      background: #eef;
+      border: 0 solid 0;
+      border-left: 15px solid #ddf;
+      font-size: 15px;
+      font-family: 'Noto Sans Korean', monospace;
+      letter-spacing: 0.07em;
+    }
+
+    body {
+      padding: 15px;
+      font-size: 15px;
+      font-family: Noto Sans;
+    }
+    td {
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>MusicDown Language</h1>
+  <h2><a href="tutorial.html">튜토리얼 페이지(링크)</a></h2>
+
+  <table>
+    <tr><td>
+      <div>
+        <h3>MusicDown</h3>
+<textarea name="textarea" class="musicdown editor" cols="80" rows="15" onkeyup="mdl(0)">
+'t:114'
+
+'piano-right'
+'key:Gb'
+|> 시라솔미 | 미--- 시라솔레' | 레' - - - 라솔파솔 | 레'---파솔라솔 |
+
+'piano-left'
+'key:Gb, clef:bass'
+|<  , , , ,      | 도솔도'레'미'---| 레파레'미'파'---  | 시.파시레'파'---|
+
+
+''                                                                                     'l:4'
+|> 시--- 시라솔미   | 미--- 시라솔레' | 레' - - - 라솔파솔 | *레'-미'- |
+'piano-left'
+|< 미시미'파'솔'---| 도솔도'레'미'---| 레파레'미'파'---  | 시.파시레'-파'-- |
+</textarea>
+      </div>
+    </td>
+    <td>
+      <div>
+        <h3>MML <button onclick="play()">play</button> <button onclick="opt()">마비노기 최적화</button></h3>
+        <textarea name="textarea" id="mml" cols="80" rows="15" class="editor">
+
+        </textarea>
+      </div>
+    </td></tr>
+  </table>
+  <div>
+    <h3>VexFlow</h3>
+    <div>
+      <canvas width=1000 height=2000></canvas>
+    </div>
+  </div>
+  <!--div>
+    <h3>VexTab</h3>
+    <div class="vex-tabdiv"
+          width=800 scale=1.0 editor="true">
+    </div>
+  </div-->
+
+
+
+</body>
+
+
+</html>
