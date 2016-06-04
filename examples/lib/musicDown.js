@@ -86,7 +86,7 @@ var error = function(type, text, point){
     errorText += ' ';
   }
   //errorText += '^';
-  console.log(errorText);
+  console.warn(errorText);
 };
 
 this.mdlParser = function(text){
@@ -613,7 +613,7 @@ this.mdl2mml = function(mdl){
 this.mdl2vexflow = function(mdl, canvas){
   var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS),
       ctx = renderer.getContext(),
-      staveWidth = canvas.width-200;
+      staveWidth = canvas.width - canvas.width*0.1;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.font = "15px Consolas";
@@ -736,7 +736,7 @@ this.mdl2vexflow = function(mdl, canvas){
 
     for(var b=0; b<=bar; b++){
       if(!b){
-        stave[s][0] = new Vex.Flow.Stave(100, staveSpace+=ROW_SPACE, staveWidth*(mainBarWidth[s][0]/sum));
+        stave[s][0] = new Vex.Flow.Stave(canvas.width*0.05, staveSpace+=ROW_SPACE, staveWidth*(mainBarWidth[s][0]/sum));
         stave[s][0].addClef( mdl[s][0].clef );
         stave[s][0].addKeySignature( mdl[s][0].key );
         if( !trackName[mdl[s][0].track] || meter!=mdl[s][0].meter ){
@@ -808,11 +808,11 @@ this.mdl2vexflow = function(mdl, canvas){
     var wordLength = 12;
     if( !mainTrackIndex ){
       if(mdl[s][0].track.length >= wordLength){
-        ctx.fillText(mdl[s][0].track.slice(0,wordLength), 10, 55+staveSpace);
-        ctx.fillText(mdl[s][0].track.slice(wordLength,mdl[s][0].track.length), 10, 75+staveSpace);
+        ctx.fillText(mdl[s][0].track.slice(0,wordLength), 10, 10+staveSpace);
+        ctx.fillText(mdl[s][0].track.slice(wordLength,mdl[s][0].track.length), 10, 30+staveSpace);
       }
       else{
-        ctx.fillText(mdl[s][0].track, 10, 65+staveSpace);
+        ctx.fillText(mdl[s][0].track, 10, 20+staveSpace);
       }
     }
   }

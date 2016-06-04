@@ -31,7 +31,14 @@
     width: 100%;
   }
   canvas {
+    width: 100%;
     margin-bottom: 30px;
+  }
+  @media (min-width:1200px){
+    .canvas-wrapper{
+      margin: 0 auto;
+      width: 80%;
+    }
   }
 </style>
 
@@ -63,8 +70,8 @@
 
  | 솔솔 라라 | 솔솔 미- | 솔& 미미 | 레16 , , |</textarea>
 </div>
-<div class="wrapper">
-  <canvas class="vexflow" width=1000 height=300></canvas>
+<div class="canvas-wrapper">
+  <canvas class="vexflow" width=600 height=300></canvas>
 </div>
 
 <p><code>,</code> 는 쉼표이고 <code>&amp;</code> 는 붙임표입니다. 붙임표는 앞의 음정을 인계받는 하나의 노트로 인식됩니다.</p>
@@ -87,8 +94,8 @@
  ''                     'l:16, t:40-9'
  |<CDEF C-D- |*C-DE FC-D EFC- DEF- |</textarea>
 </div>
-<div class="wrapper">
-  <canvas class="vexflow" width=1000 height=300></canvas>
+<div class="canvas-wrapper">
+  <canvas class="vexflow" width=600 height=300></canvas>
 </div>
 
 <p>멜로디의 윗줄에 <code>' '</code> 를 사용하여 음악의 흐름에 대한 값을 설정할 수 있습니다. 속성은 행의 처음부터 적용되기 때문에 생략하고 싶다면 처음에 <code>''</code>를 넣어줘야 합니다. <br>
@@ -151,8 +158,8 @@
  |<C - - - E - - - | <C - - - E - - - |
   <G         ,            <,         G</textarea>
 </div>
-<div class="wrapper">
-  <canvas class="vexflow" width=1000 height=500></canvas>
+<div class="canvas-wrapper">
+  <canvas class="vexflow" width=600 height=500></canvas>
 </div>
 
 <p>트랙을 굳이 새로 만들지 않고 간단한 화음을 넣고 싶은 경우에는 <code>|</code> 로 시작하지 않는 행을 작성하면 바로 위의 ‘멜로디행’을 수식하는 ‘화음행’이 됩니다. <br>
@@ -174,8 +181,8 @@
  'l:2'
  | C- ,, |</textarea>
 </div>
-<div class="wrapper">
-  <canvas class="vexflow" width=1000 height=200></canvas>
+<div class="canvas-wrapper">
+  <canvas class="vexflow" width=600 height=200></canvas>
 </div>
 
 </div></body>

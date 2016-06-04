@@ -4,6 +4,10 @@ $(document).ready(function(){
   musicdown = $('.musicdown');
   vexflow = $('.vexflow');
 
+  var width = $(window).width();
+  if( width>400 ){
+    $('canvas').attr('width', '1000');
+  }
 
   for(var m in musicdown){
     mdl(m);
@@ -55,7 +59,3 @@ var opt = function(){
     }
   });
 };
-
-$(document).ready(function(){
-  mdl();
-});
