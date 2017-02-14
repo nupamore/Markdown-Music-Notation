@@ -1,9 +1,6 @@
-# MusicDown-Language
-MDL = Music Macro Language(MML) + Markdown
+# Markdown-Music-Notation (MMN)
 
 ---
 
-
-tutorial : http://nupamore.github.io/MusicDown-Language/examples  
-editor : http://nupamore.github.io/MusicDown-Language/examples/editor.html
-
+spec : http://nupamore.github.io/Markdown-Music-Notation/examples  
+editor : http://nupamore.github.io/Markdown-Music-Notation/examples/editor.html
