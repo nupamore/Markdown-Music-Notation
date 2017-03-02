@@ -1,25 +1,25 @@
 
 
 $(document).ready(function(){
-  musicdown = $('.musicdown');
+  $mmn = $('.mmn-editor');
   vexflow = $('.vexflow');
 
 
-  for(var m in musicdown){
-    mdl(m);
+  for(var m in $mmn){
+    mmn(m);
   }
 });
 
 
-var mdl = function(index){
+var mmn = function(index){
 
-  var mdl = mdlParser( musicdown[index].value );
+  var mmn = mmnParser( $mmn[index].value );
 
   // vexflow
-  mdl2vexflow(mdl, $('canvas')[index]);
+  mmn2vexflow(mmn, $('canvas')[index]);
 
   // mml
-  var mml = mdl2mml(mdl);
+  var mml = mmn2mml(mmn);
   var mmlText = JSON.stringify(mml,null,4);
 
   $('#mml').prop('value', mmlText );
@@ -57,5 +57,5 @@ var opt = function(){
 };
 
 $(document).ready(function(){
-  mdl();
+  mmn();
 });

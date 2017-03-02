@@ -1,10 +1,10 @@
 
 (function(){
 
-this.mdlParser = function( text ){};
-this.mdl2vexflow = function( mdl, canvas ){};
-this.mdl2vextab = function( mdl ){};
-this.mdl2mml = function( mdl ){};
+this.mmnParser = function( text ){};
+this.mmn2vexflow = function( mmn, canvas ){};
+this.mmn2vextab = function( mmn ){};
+this.mmn2mml = function( mmn ){};
 
 var LENGTH_RANGE = 6720;
 
@@ -89,7 +89,7 @@ var error = function(type, text, point){
   console.log(errorText);
 };
 
-this.mdlParser = function(text){
+this.mmnParser = function(text){
 
   var rows = [],            // code rows
       staffs = [],          // staff rows
@@ -454,26 +454,26 @@ this.mdlParser = function(text){
 };
 
 // vextab converter
-this.mdl2vextab = function(mdl){
-  var mdl = JSON.parse( JSON.stringify( mdl ) );
+this.mmn2vextab = function(mmn){
+  var mmn = JSON.parse( JSON.stringify( mmn ) );
 
   var vextab = '',
       notePanel = '',
       tuplet = 0,
       tupletCheck = 0,
       meter = '';
-  for(var i in mdl){
+  for(var i in mmn){
     vextab += 'tabstave notation=true tablature=false ';
-    vextab += 'key=' + mdl[i][0].key + ' ';
-    if( meter!=mdl[i][0].meter ){
-      meter = mdl[i][0].meter;
+    vextab += 'key=' + mmn[i][0].key + ' ';
+    if( meter!=mmn[i][0].meter ){
+      meter = mmn[i][0].meter;
       vextab += 'time=' + meter;
     }
     vextab += '\n';
     vextab += 'notes ';
 
-    for(var j in mdl[i]){
-      var note = mdl[i][j];
+    for(var j in mmn[i]){
+      var note = mmn[i][j];
       if( j!=0 && note.bar=='bar' ){
         vextab += ' | ';
       }
@@ -492,7 +492,7 @@ this.mdl2vextab = function(mdl){
           note.note[n] = note.note[n].charAt(0)+'@';
         }
         switch(note.note[n]){
-          case '&': notePanel += 'h'+mdl[i][j-1].note[n]; break;
+          case '&': notePanel += 'h'+mmn[i][j-1].note[n]; break;
           case 'R': notePanel += '##'; break;
           default: notePanel += note.note[n]; break;
         }
@@ -519,20 +519,20 @@ this.mdl2vextab = function(mdl){
 
 
 // mml converter
-this.mdl2mml = function(mdl){
-  var mdl = JSON.parse( JSON.stringify( mdl ) ),
+this.mmn2mml = function(mmn){
+  var mmn = JSON.parse( JSON.stringify( mmn ) ),
       track = {};
 
-  for(var i=1; i<mdl.length; i++){
-    mdl[0] = mdl[0].concat(mdl[i]);
+  for(var i=1; i<mmn.length; i++){
+    mmn[0] = mmn[0].concat(mmn[i]);
   }
-  mdl = mdl[0];
+  mmn = mmn[0];
 
-  for(var i in mdl){
-    if( !track[mdl[i].track] )
-      track[mdl[i].track] = [];
-    while(mdl[i].note.length > track[mdl[i].track].length)
-      track[mdl[i].track].push('');
+  for(var i in mmn){
+    if( !track[mmn[i].track] )
+      track[mmn[i].track] = [];
+    while(mmn[i].note.length > track[mmn[i].track].length)
+      track[mmn[i].track].push('');
   }
 
   for(var t in track){
@@ -540,58 +540,58 @@ this.mdl2mml = function(mdl){
       var tempo = 0,
           volume = 0,
           octave = 0;
-      for(var i in mdl){
-        if(t != mdl[i].track)
+      for(var i in mmn){
+        if(t != mmn[i].track)
           continue;
         // event
-        if(mdl[i].tempo != tempo){
-          tempo = mdl[i].tempo;
+        if(mmn[i].tempo != tempo){
+          tempo = mmn[i].tempo;
           track[t][c] += 't' + tempo;
         }
-        if(mdl[i].volume != volume){
-          volume = mdl[i].volume;
+        if(mmn[i].volume != volume){
+          volume = mmn[i].volume;
           track[t][c] += 'v' + volume;
         }
         // note
-        if(mdl[i].note[c]){
+        if(mmn[i].note[c]){
           // octave
-          if( octave != mdl[i].octave[c] ){
-            octave += mdl[i].octave[c]-octave;
-            if(mdl[i].note[c].charAt(0)=='&'){
-              octave = mdl[i-1].octave[c];
+          if( octave != mmn[i].octave[c] ){
+            octave += mmn[i].octave[c]-octave;
+            if(mmn[i].note[c].charAt(0)=='&'){
+              octave = mmn[i-1].octave[c];
             }
             track[t][c] += 'o'+octave;
           }
           // key
-          if( '+'==keyConfig[mdl[i].key][0] ){
-            if( mdl[i].note[c].match(keyConfig[mdl[i].key][1]) ){
-              if( 1==mdl[i].note[c].length ){
-                mdl[i].note[c] += '#';
+          if( '+'==keyConfig[mmn[i].key][0] ){
+            if( mmn[i].note[c].match(keyConfig[mmn[i].key][1]) ){
+              if( 1==mmn[i].note[c].length ){
+                mmn[i].note[c] += '#';
               }
             }
           }
-          else if( '-'==keyConfig[mdl[i].key][0] ){
-            if( mdl[i].note[c].match(keyConfig[mdl[i].key][1]) ){
-              if( 1==mdl[i].note[c].length ){
-                mdl[i].note[c] += 'b';
+          else if( '-'==keyConfig[mmn[i].key][0] ){
+            if( mmn[i].note[c].match(keyConfig[mmn[i].key][1]) ){
+              if( 1==mmn[i].note[c].length ){
+                mmn[i].note[c] += 'b';
               }
             }
           }
 
-          track[t][c] += mdl[i].note[c].charAt(0);
-          if(mdl[i].note[c].charAt(0)=='&'){
-            track[t][c] += mdl[i-1].note[c].charAt(0);
+          track[t][c] += mmn[i].note[c].charAt(0);
+          if(mmn[i].note[c].charAt(0)=='&'){
+            track[t][c] += mmn[i-1].note[c].charAt(0);
           }
           track[t][c] += {
             '#': '+',
             'b': '-'
-          }[mdl[i].note[c].charAt(1)] || '';
+          }[mmn[i].note[c].charAt(1)] || '';
         }
         else {
           track[t][c] += 'R';
         }
         // length
-        var convLen = convertLength(mdl[i].noteLen);
+        var convLen = convertLength(mmn[i].noteLen);
         var len = convLen.substring(0,convLen.length-1)*1;
         var tuplet = convLen.charAt(convLen.length-1);
         track[t][c] += {
@@ -610,7 +610,7 @@ this.mdl2mml = function(mdl){
 
 
 // vexflow renderer
-this.mdl2vexflow = function(mdl, canvas){
+this.mmn2vexflow = function(mmn, canvas){
   var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS),
       ctx = renderer.getContext(),
       staveWidth = canvas.width-200;
@@ -619,7 +619,7 @@ this.mdl2vexflow = function(mdl, canvas){
   ctx.font = "15px Consolas";
 
   var stave = [],
-      mainTrack = mdl[0][0].track,
+      mainTrack = mmn[0][0].track,
       mainBarWidth = [],
       mainTrackIndex = 0,
       staveSpace = -40,
@@ -627,8 +627,8 @@ this.mdl2vexflow = function(mdl, canvas){
       ROW_SPACE = 100,
       trackName = [],
       meter = '';
-  for(var s=0; s<mdl.length; s++){
-    if( s && mainTrack == mdl[s][0].track )
+  for(var s=0; s<mmn.length; s++){
+    if( s && mainTrack == mmn[s][0].track )
       staveSpace += TRACK_SPACE;
 
     var notes = [],
@@ -642,57 +642,57 @@ this.mdl2vexflow = function(mdl, canvas){
     notes[0] = [];
     beamsIndex[0] = [0];
 
-    for(var i=0; i<mdl[s].length; i++){
+    for(var i=0; i<mmn[s].length; i++){
       // bar
-      if(mdl[s][i].bar=='bar'){
+      if(mmn[s][i].bar=='bar'){
         bar++;
         notes[bar] = [];
         beamsIndex[bar] = [0];
         barIndex = 0;
       }
       // beam
-      noteLen += mdl[s][i].noteLen;
+      noteLen += mmn[s][i].noteLen;
       if( noteLen >= LENGTH_RANGE/4 ){
         noteLen = 0;
         beamsIndex[bar].push(barIndex+1);
       }
       // note
       var keys = [];
-      var convertLen = convertLength(mdl[s][i].noteLen);
-      mdl[s][i].note = mdl[s][i].note.reverse();
-      mdl[s][i].octave = mdl[s][i].octave.reverse();
-      for(var c in mdl[s][i].note){
-        switch(mdl[s][i].note[c]){
+      var convertLen = convertLength(mmn[s][i].noteLen);
+      mmn[s][i].note = mmn[s][i].note.reverse();
+      mmn[s][i].octave = mmn[s][i].octave.reverse();
+      for(var c in mmn[s][i].note){
+        switch(mmn[s][i].note[c]){
           case '&':
-            keys.push(mdl[s][i-1].note[c]+'/'+mdl[s][i-1].octave[c]);
+            keys.push(mmn[s][i-1].note[c]+'/'+mmn[s][i-1].octave[c]);
             tiesIndex.push({
               bar: bar,
               index: notes[bar].length
             });
           break;
           default:
-            keys.push(mdl[s][i].note[c]+'/'+mdl[s][i].octave[c]);
+            keys.push(mmn[s][i].note[c]+'/'+mmn[s][i].octave[c]);
           break;
         }
       }
 
-      if(!!~mdl[s][i].tupletCheck){
+      if(!!~mmn[s][i].tupletCheck){
           convertLen = convertLen.replace(/[tfs]/,'');
-          if(mdl[s][i].tupletCheck == 1){
+          if(mmn[s][i].tupletCheck == 1){
             tupletIndex.push({
               bar: bar,
               index: barIndex,
               len: 0
             });
           }
-          tupletIndex[tupletIndex.length-1].len = mdl[s][i].tupletCheck;
+          tupletIndex[tupletIndex.length-1].len = mmn[s][i].tupletCheck;
       }
-      if('R' == mdl[s][i].note[0].charAt(0)){
+      if('R' == mmn[s][i].note[0].charAt(0)){
         convertLen += 'r';
       }
 
       var note = new Vex.Flow.StaveNote({
-        clef: mdl[s][i].clef,
+        clef: mmn[s][i].clef,
         keys: keys,
         duration: convertLen
       });
@@ -701,9 +701,9 @@ this.mdl2vexflow = function(mdl, canvas){
         note.addDotToAll();
       }
 
-      for(var c in mdl[s][i].note){
-        if( mdl[s][i].note[c].charAt(1) ){
-          switch( mdl[s][i].note[c].charAt(1) ){
+      for(var c in mmn[s][i].note){
+        if( mmn[s][i].note[c].charAt(1) ){
+          switch( mmn[s][i].note[c].charAt(1) ){
             case '#': note.addAccidental(c, new Vex.Flow.Accidental("#")); break;
             case 'b': note.addAccidental(c, new Vex.Flow.Accidental("b")); break;
             case 'n': note.addAccidental(c, new Vex.Flow.Accidental("n")); break;
@@ -718,7 +718,7 @@ this.mdl2vexflow = function(mdl, canvas){
     // stave draw
     stave[s] = [];
       // calc bar size
-    if(mdl[s][0].track == mainTrack){
+    if(mmn[s][0].track == mainTrack){
       var barWidth = [];
       var sum = 3;
       for(var b=0; b<notes.length; b++){
@@ -737,12 +737,12 @@ this.mdl2vexflow = function(mdl, canvas){
     for(var b=0; b<=bar; b++){
       if(!b){
         stave[s][0] = new Vex.Flow.Stave(100, staveSpace+=ROW_SPACE, staveWidth*(mainBarWidth[s][0]/sum));
-        stave[s][0].addClef( mdl[s][0].clef );
-        stave[s][0].addKeySignature( mdl[s][0].key );
-        if( !trackName[mdl[s][0].track] || meter!=mdl[s][0].meter ){
-          meter = mdl[s][0].meter;
+        stave[s][0].addClef( mmn[s][0].clef );
+        stave[s][0].addKeySignature( mmn[s][0].key );
+        if( !trackName[mmn[s][0].track] || meter!=mmn[s][0].meter ){
+          meter = mmn[s][0].meter;
           stave[s][0].addTimeSignature( meter );
-          trackName[mdl[s][0].track] = 1;
+          trackName[mmn[s][0].track] = 1;
         }
         stave[s][0].setContext(ctx).draw();
       }
@@ -797,22 +797,22 @@ this.mdl2vexflow = function(mdl, canvas){
 
 
     // line
-    if( s && mainTrack==mdl[s][0].track ){
+    if( s && mainTrack==mmn[s][0].track ){
       new Vex.Flow.StaveConnector(stave[mainTrackIndex][0], stave[s-1][0]).setType(1).setContext(ctx).draw();
       mainTrackIndex = s;
     }
-    else if( s == mdl.length-1 ){
+    else if( s == mmn.length-1 ){
       new Vex.Flow.StaveConnector(stave[mainTrackIndex][0], stave[s][0]).setType(1).setContext(ctx).draw();
     }
     // trackName
     var wordLength = 12;
     if( !mainTrackIndex ){
-      if(mdl[s][0].track.length >= wordLength){
-        ctx.fillText(mdl[s][0].track.slice(0,wordLength), 10, 55+staveSpace);
-        ctx.fillText(mdl[s][0].track.slice(wordLength,mdl[s][0].track.length), 10, 75+staveSpace);
+      if(mmn[s][0].track.length >= wordLength){
+        ctx.fillText(mmn[s][0].track.slice(0,wordLength), 10, 55+staveSpace);
+        ctx.fillText(mmn[s][0].track.slice(wordLength,mmn[s][0].track.length), 10, 75+staveSpace);
       }
       else{
-        ctx.fillText(mdl[s][0].track, 10, 65+staveSpace);
+        ctx.fillText(mmn[s][0].track, 10, 65+staveSpace);
       }
     }
   }
