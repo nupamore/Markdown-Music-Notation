@@ -736,19 +736,11 @@ this.mmn2vexflow = function(mmn, canvas){
 
     for(var b=0; b<=bar; b++){
       if(!b){
-<<<<<<< HEAD:examples/lib/musicDown.js
-        stave[s][0] = new Vex.Flow.Stave(canvas.width*0.05, staveSpace+=ROW_SPACE, staveWidth*(mainBarWidth[s][0]/sum));
-        stave[s][0].addClef( mdl[s][0].clef );
-        stave[s][0].addKeySignature( mdl[s][0].key );
-        if( !trackName[mdl[s][0].track] || meter!=mdl[s][0].meter ){
-          meter = mdl[s][0].meter;
-=======
         stave[s][0] = new Vex.Flow.Stave(100, staveSpace+=ROW_SPACE, staveWidth*(mainBarWidth[s][0]/sum));
         stave[s][0].addClef( mmn[s][0].clef );
         stave[s][0].addKeySignature( mmn[s][0].key );
         if( !trackName[mmn[s][0].track] || meter!=mmn[s][0].meter ){
           meter = mmn[s][0].meter;
->>>>>>> master:examples/lib/mmn.js
           stave[s][0].addTimeSignature( meter );
           trackName[mmn[s][0].track] = 1;
         }
@@ -815,21 +807,12 @@ this.mmn2vexflow = function(mmn, canvas){
     // trackName
     var wordLength = 12;
     if( !mainTrackIndex ){
-<<<<<<< HEAD:examples/lib/musicDown.js
-      if(mdl[s][0].track.length >= wordLength){
-        ctx.fillText(mdl[s][0].track.slice(0,wordLength), 10, 10+staveSpace);
-        ctx.fillText(mdl[s][0].track.slice(wordLength,mdl[s][0].track.length), 10, 30+staveSpace);
-      }
-      else{
-        ctx.fillText(mdl[s][0].track, 10, 20+staveSpace);
-=======
       if(mmn[s][0].track.length >= wordLength){
         ctx.fillText(mmn[s][0].track.slice(0,wordLength), 10, 55+staveSpace);
         ctx.fillText(mmn[s][0].track.slice(wordLength,mmn[s][0].track.length), 10, 75+staveSpace);
       }
       else{
         ctx.fillText(mmn[s][0].track, 10, 65+staveSpace);
->>>>>>> master:examples/lib/mmn.js
       }
     }
   }

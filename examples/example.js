@@ -59,10 +59,3 @@ var opt = function(){
     }
   });
 };
-<<<<<<< HEAD
-=======
-
-$(document).ready(function(){
-  mmn();
-});
->>>>>>> master
