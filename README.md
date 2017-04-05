@@ -6,10 +6,10 @@ MMN = Music notation language like Markdown
 ### Development plan (~November)
 
 - [x] Grammer
-- [ ] Parser
+- [ ] [Parser](https://github.com/nupamore/mmn-parser)
 - [ ] Document
 - [ ] Editor
-- [ ] to Vextab
+- [ ] to Vexflow
 - [ ] to MML
 - [ ] to MIDI
 
